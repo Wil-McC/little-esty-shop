@@ -1,0 +1,9 @@
+<h1><%= @merchant.name %>'s Discounts</h1>
+<ul>
+<% @merchant.discounts.each do |disco| %>
+  <section id="discount-<%= disco.id%>" >
+    <h4>Discount Amount: <%= disco.percentage %>%</h4>
+    <h4>Quantity Threshold: <%= disco.threshold %></h4>
+  </section>
+<% end %>
+</ul>
