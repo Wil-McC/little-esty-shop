@@ -22,6 +22,7 @@ RSpec.describe 'when I visit the merchant discount index page' do
     visit merchant_discounts_path(@merchant1)
 
     within(".upcoming_holidays") do
+      expect(page).to have_content('Upcoming Holidays')
       expect(page).to have_content('Memorial Day - 2021-05-31')
       expect(page).to have_content('Independence Day - 2021-07-05')
       expect(page).to have_content('Labor Day - 2021-09-06')

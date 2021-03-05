@@ -1,5 +1,6 @@
 <h1><%= @merchant.name %>'s Discounts</h1>
 <section class="upcoming_holidays">
+  <h3>Upcoming Holidays</h3>
   <% DateService.upcoming_three.each do |holiday| %>
     <p><%= holiday[:localName] %> - <%= holiday[:date] %></p>
   <% end %>
