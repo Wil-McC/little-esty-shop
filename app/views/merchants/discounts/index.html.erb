@@ -1,4 +1,9 @@
 <h1><%= @merchant.name %>'s Discounts</h1>
+<section class="upcoming_holidays">
+  <% DateService.upcoming_three.each do |holiday| %>
+    <p><%= holiday[:localName] %> - <%= holiday[:date] %></p>
+  <% end %>
+</section>
 <ul>
 <% @merchant.discounts.each do |disco| %>
   <section id="discount-<%= disco.id%>" >
