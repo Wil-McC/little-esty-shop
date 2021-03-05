@@ -1,7 +1,12 @@
 <h1><%= @merchant.name %>'s Discounts</h1>
+<section class="upcoming_holidays">
+  <% DateService.upcoming_three.each do |holiday| %>
+    <p><%= holiday[:localName] %> - <%= holiday[:date] %></p>
+  <% end %>
+</section>
 <ul>
 <% @merchant.discounts.each do |disco| %>
-  <section id="discount-<%= disco.id%>" >
+  <section id="discount-<%= disco.id%>">
     <h4>Discount Amount: <%= disco.percentage %>%</h4>
     <h4>Quantity Threshold: <%= disco.threshold %></h4>
     <%= link_to "Discount Info Page", merchant_discount_path(@merchant, disco) %>

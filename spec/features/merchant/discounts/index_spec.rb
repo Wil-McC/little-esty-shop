@@ -18,5 +18,14 @@ RSpec.describe 'when I visit the merchant discount index page' do
 
     expect(current_path).to eq(merchant_discount_path(@merchant1, @disco1))
   end
-  it 'displays the next 3 upcoming holidays in a holidays section'
+  it 'displays the next 3 upcoming holidays in a holidays section' do
+    visit merchant_discounts_path(@merchant1)
+
+    within(".upcoming_holidays") do
+      expect(page).to have_content('Memorial Day - 2021-05-31')
+      expect(page).to have_content('Independence Day - 2021-07-05')
+      expect(page).to have_content('Labor Day - 2021-09-06')
+      expect(page).to_not have_content('Columbus Day - 2021-10-11')
+    end
+  end
 end
