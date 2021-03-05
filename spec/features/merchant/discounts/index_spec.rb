@@ -13,7 +13,10 @@ RSpec.describe 'when I visit the merchant discount index page' do
       expect(page).to have_content(@disco1.percentage)
       expect(page).to have_content(@disco1.threshold)
       expect(page).to have_link("Discount Info Page")
+      click_on "Discount Info Page"
     end
+
+    expect(current_path).to eq(merchant_discount_path(@merchant1, @disco1))
   end
   it 'displays the next 3 upcoming holidays in a holidays section'
 end
