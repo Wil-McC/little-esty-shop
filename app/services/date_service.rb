@@ -8,7 +8,7 @@ class DateService
   end
 
   def self.upcoming_three
-    out = upcoming.first(3)
+    # out = upcoming.first(3)
   end
 
   def self.get_data(url)
