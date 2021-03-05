@@ -18,7 +18,16 @@ RSpec.describe 'when I visit the merchant discount index page' do
 
     expect(current_path).to eq(merchant_discount_path(@merchant1, @disco1))
   end
-  it 'displays the next 3 upcoming holidays in a holidays section' do
+  it "has a link to a new discount form that redirects" do
+    visit merchant_discounts_path(@merchant1)
+
+    expect(page).to have_link('Create New Discount')
+
+    click_on 'Create New Discount'
+
+    expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+  end
+  xit 'displays the next 3 upcoming holidays in a holidays section' do
     visit merchant_discounts_path(@merchant1)
 
     within(".upcoming_holidays") do

@@ -1,11 +1,18 @@
 class Merchants::DiscountsController < ApplicationController
-  before_action :set_merchant, only: [:index, :show]
+  before_action :set_merchant, only: [:index, :show, :new]
   before_action :set_discount, only: [:show]
 
   def index
   end
 
   def show
+  end
+
+  def new
+  end
+
+  def create
+    
   end
 
   private
