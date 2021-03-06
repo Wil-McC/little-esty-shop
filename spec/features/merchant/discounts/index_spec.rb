@@ -18,14 +18,36 @@ RSpec.describe 'when I visit the merchant discount index page' do
 
     expect(current_path).to eq(merchant_discount_path(@merchant1, @disco1))
   end
+  it "has a link to a new discount form that redirects" do
+    visit merchant_discounts_path(@merchant1)
+
+    expect(page).to have_link('Create New Discount')
+
+    click_on 'Create New Discount'
+
+    expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+  end
   it 'displays the next 3 upcoming holidays in a holidays section' do
     visit merchant_discounts_path(@merchant1)
 
     within(".upcoming_holidays") do
+      expect(page).to have_content('Upcoming Holidays')
       expect(page).to have_content('Memorial Day - 2021-05-31')
       expect(page).to have_content('Independence Day - 2021-07-05')
       expect(page).to have_content('Labor Day - 2021-09-06')
       expect(page).to_not have_content('Columbus Day - 2021-10-11')
     end
+  end
+  it "has a link to delete each discount from merchant" do
+    visit merchant_discounts_path(@merchant1)
+
+    within("#discount-#{@disco1.id}") do
+      expect(page).to have_link('Delete Discount')
+      click_on 'Delete Discount'
+    end
+
+    expect(page).to_not have_content("#discount-#{@disco1.id}")
+    expect(page).to have_content("Discount Successfully Deleted")
+    expect(current_path).to eq(merchant_discounts_path(@merchant1))
   end
 end
