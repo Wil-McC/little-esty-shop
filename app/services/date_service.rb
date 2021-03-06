@@ -1,6 +1,3 @@
-# require "json"
-# require "faraday"
-
 class DateService
 
   def self.upcoming
@@ -8,14 +5,11 @@ class DateService
   end
 
   def self.upcoming_three
-    # out = upcoming.first(3)
+    upcoming.first(3)
   end
 
   def self.get_data(url)
     response = Faraday.get(url)
-    # do |req|
-      # req.headers['Authorization'] = "token #{ENV['github_token']}"
-    # end
     data = response.body
     JSON.parse(data, symbolize_names: true)
   end
