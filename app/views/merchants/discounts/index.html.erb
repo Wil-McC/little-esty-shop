@@ -12,6 +12,7 @@
     <h4>Discount Amount: <%= disco.percentage %>%</h4>
     <h4>Quantity Threshold: <%= disco.threshold %></h4>
     <%= link_to "Discount Info Page", merchant_discount_path(@merchant, disco) %>
+    <%= link_to "Delete Discount", merchant_discount_path(@merchant, disco), method: :delete %>
   </section>
 <% end %>
 </ul>

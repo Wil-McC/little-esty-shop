@@ -38,4 +38,16 @@ RSpec.describe 'when I visit the merchant discount index page' do
       expect(page).to_not have_content('Columbus Day - 2021-10-11')
     end
   end
+  it "has a link to delete each discount from merchant" do
+    visit merchant_discounts_path(@merchant1)
+
+    within("#discount-#{@disco1.id}") do
+      expect(page).to have_link('Delete Discount')
+      click_on 'Delete Discount'
+    end
+
+    expect(page).to_not have_content("#discount-#{@disco1.id}")
+    expect(page).to have_content("Discount Successfully Deleted")
+    expect(current_path).to eq(merchant_discounts_path(@merchant1))
+  end
 end
