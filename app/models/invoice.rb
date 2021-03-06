@@ -16,7 +16,20 @@ class Invoice < ApplicationRecord
     .distinct
   end
 
-  def total_revenue
-    invoice_items.sum("invoice_items.quantity * invoice_items.unit_price").to_i
+  # get discounts
+  # get discount thresholds
+  # find lowest?
+  # sum of ( for each invoice item, if quantity >= threshold, ( quantity * price ) * discounted
+                                  # else quantity * price
+
+  def get_discounts
+    merchants.first.discounts
   end
+
+  def total_revenue
+    get_discounts
+    gross = invoice_items.sum("invoice_items.quantity * invoice_items.unit_price").to_i
+  end
+
+
 end
