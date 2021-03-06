@@ -12,7 +12,7 @@ class Merchants::DiscountsController < ApplicationController
   end
 
   def create
-    
+    # use strong params
   end
 
   private
@@ -23,5 +23,9 @@ class Merchants::DiscountsController < ApplicationController
 
   def set_discount
     @discount = Discount.find(params[:id])
+  end
+
+  def discount_params
+    params.require(:discount).permit(:percentage, :threshold)
   end
 end
