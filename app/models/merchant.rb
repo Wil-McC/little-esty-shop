@@ -73,4 +73,8 @@ class Merchant < ApplicationRecord
   def disable_merchant
     update(status: false)
   end
+
+  def total_revenue
+    invoice_items.sum("invoice_items.quantity * invoice_items.unit_price").to_i
+  end
 end
