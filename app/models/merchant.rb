@@ -74,7 +74,24 @@ class Merchant < ApplicationRecord
     update(status: false)
   end
 
+  def get_discounts
+    standard = []
+    discounted = []
+
+    discounts.each do |disco|
+      discounted << invoice_items.where('invoice_item.quantity >= ?', disco.threshold)
+    end
+
+    max_discount = disco.percentage
+
+    # if disco.percentage < max_discount, max_discount = disco.percentage
+    # invoice_items.select(:quantity, :unit_price).where('invoice_item.quantity >= ?', 5)
+    # GOOD invoice_items.where('invoice_items.quantity >= ?', 5)
+  end
+
   def total_revenue
+    # make a query for each discount (where quantity >= threshold), then pick the smallest final sum
+    # require "pry"; binding.pry
     invoice_items.sum("invoice_items.quantity * invoice_items.unit_price").to_i
   end
 end
