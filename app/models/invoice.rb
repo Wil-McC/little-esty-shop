@@ -16,7 +16,25 @@ class Invoice < ApplicationRecord
     .distinct
   end
 
-  def total_revenue
+  def invoice_total_revenue
     invoice_items.sum("invoice_items.quantity * invoice_items.unit_price").to_i
+  end
+
+  def discounted_total_revenue
+    # discount = fetch discount
+    # invoice_total_revenue - discount
+  end
+
+  def fetch_discount
+    # if in discount_compute
+    #
+  end
+
+  def discount_compute
+    out = invoice_items.joins(:discounts)
+    .select('invoice_items.*, (discounts.percentage_discount * invoice_items.quantity * invoice_items.unit_price) as gross_discount')
+    .where('invoice_items.quantity >= discounts.threshold')
+    .order('discounts.percentage')
+    require "pry"; binding.pry
   end
 end

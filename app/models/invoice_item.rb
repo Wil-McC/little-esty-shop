@@ -4,6 +4,7 @@ class InvoiceItem < ApplicationRecord
                         :status
   belongs_to :invoice
   belongs_to :item
+  has_many :discounts, through: :item
   has_many :merchants, through: :item
   has_many :discounts, through: :merchants
   has_many :customers, through: :invoice
@@ -14,4 +15,7 @@ class InvoiceItem < ApplicationRecord
   def self.total_revenue
     sum("invoice_items.quantity * invoice_items.unit_price").to_i
   end
+
+
+
 end

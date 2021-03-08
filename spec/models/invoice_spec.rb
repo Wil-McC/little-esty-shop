@@ -45,6 +45,9 @@ RSpec.describe Invoice, type: :model do
     before :each do
       @merchant1 = create(:merchant)
 
+      @disco1 = @merchant1.discounts.create!(percentage: 20, threshold: 5)
+      @disco2 = @merchant1.discounts.create!(percentage: 25, threshold: 10)
+
       @customer1 = create(:customer)
 
       @item1 = create(:item, merchant_id: @merchant1.id)
@@ -65,8 +68,11 @@ RSpec.describe Invoice, type: :model do
       @invoice_item6 = create(:invoice_item, invoice_id: @invoice1.id, item_id: @item6.id, status: 1, quantity: 1, unit_price: 100)
       @invoice_item7 = create(:invoice_item, invoice_id: @invoice1.id, item_id: @item7.id, status: 2, quantity: 1, unit_price: 100)
     end
-    it "#total_revenue" do
-      expect(@invoice1.total_revenue).to eq(1980)
+    it "#invoice_total_revenue" do
+      expect(@invoice1.invoice_total_revenue).to eq(2200)
+    end
+    it "discount_compute" do
+      expect(@invoice1.discount_compute).to eq(1980)
     end
   end
 end

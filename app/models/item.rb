@@ -3,6 +3,7 @@ class Item < ApplicationRecord
   validates :description, allow_blank: false, presence: true
   validates :unit_price, allow_blank: false, presence: true
   belongs_to :merchant
+  has_many :discounts, through: :merchant
   has_many :invoice_items
   has_many :invoices, through: :invoice_items
   has_many :customers, through: :invoices
