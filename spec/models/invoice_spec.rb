@@ -66,7 +66,7 @@ RSpec.describe Invoice, type: :model do
       @invoice_item7 = create(:invoice_item, invoice_id: @invoice1.id, item_id: @item7.id, status: 2, quantity: 1, unit_price: 100)
     end
     it "#total_revenue" do
-      expect(@invoice1.total_revenue).to eq(2200)
+      expect(@invoice1.total_revenue).to eq(1980)
     end
   end
 end

@@ -84,8 +84,6 @@ class Merchant < ApplicationRecord
 
     max_discount = disco.percentage
 
-    # if disco.percentage < max_discount, max_discount = disco.percentage
-    # invoice_items.select(:quantity, :unit_price).where('invoice_item.quantity >= ?', 5)
     # GOOD invoice_items.where('invoice_items.quantity >= ?', 5)
   end
 

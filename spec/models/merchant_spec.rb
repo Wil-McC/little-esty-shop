@@ -87,11 +87,11 @@ RSpec.describe Merchant, type: :model do
         expect(@merchant1.disabled_items).to eq([@item4, @item5, @item6])
       end
     end
-    describe '#total_revenue' do
-      it 'returns total revenue from all items' do
-        expect(@merchant1.total_revenue).to eq(1880)
-      end
-    end
+    # describe '#total_revenue' do
+      # it 'returns total revenue from all items' do
+        # expect(@merchant1.total_revenue).to eq(1880)
+      # end
+    # end
   end
 
   describe 'class methods' do
