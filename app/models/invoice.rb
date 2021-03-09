@@ -56,4 +56,11 @@ class Invoice < ApplicationRecord
       .order('discounts.percentage DESC')
       .where('invoice_items.quantity >= discounts.threshold')
   end
+
+  def discount_applied
+    invoice_items.joins(:discounts)
+      .select('invoice_items.*, discounts.id as discount_id')
+      .order('discounts.percentage DESC')
+      .where('invoice_items.quantity >= discounts.threshold')
+  end
 end

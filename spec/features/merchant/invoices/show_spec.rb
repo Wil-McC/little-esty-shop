@@ -59,15 +59,28 @@ RSpec.describe 'the merchant invoice index page' do
     expect(page).not_to have_content(@item7.name)
   end
 
+  # Bulk Discount Tests
+
   it "shows total revenue for all items on the invoice with discounts applied" do
     @disco1 = @merchant1.discounts.create!(percentage: 20, threshold: 5)
-    @disco2 = @merchant1.discounts.create!(percentage: 25, threshold: 10)
 
     visit merchant_invoice_path(@merchant1.id, @invoice1.id)
 
     expect(page).to have_content("Gross Merchant Revenue: $2100")
     expect(page).to have_content('Merchant Revenue w/ Discount(s): $1880')
   end
+
+  it "show link to discount show page for eligible invoice items" do
+    @disco1 = @merchant1.discounts.create!(percentage: 20, threshold: 5)
+
+    visit merchant_invoice_path(@merchant1.id, @invoice1.id)
+
+    within("#invoice_item-#{@invoice_item1.id}") do
+      expect(page).to have_link("#{@disco1.percentage}% Discount Applied")
+    end
+  end
+
+  # Drop Down Tests
 
   it 'shows update item status select field and update button' do
     visit merchant_invoice_path(@merchant1.id, @invoice1.id )

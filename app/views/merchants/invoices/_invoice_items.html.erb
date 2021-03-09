@@ -4,6 +4,7 @@
     <div id="invoice_item-<%= invoice_item.id %>">
       <%= invoice_item.item.name %>
       <%= invoice_item.quantity %>
+
       <%= render partial: "dropdown", locals: {invoice_item: invoice_item} %>
     </div>
   <% end %>

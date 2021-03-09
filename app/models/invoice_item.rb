@@ -16,6 +16,13 @@ class InvoiceItem < ApplicationRecord
     sum("invoice_items.quantity * invoice_items.unit_price").to_i
   end
 
-
-
+  def discount
+    merchant = merchants.first
+    if invoice.discount_applied.find(id)
+      disco_id = invoice.discount_applied.find(id).discount_id
+      disco = Discount.find(disco_id)
+    else
+      nil
+    end
+  end
 end
