@@ -7,4 +7,5 @@
       <%= render partial: "dropdown", locals: {invoice_item: invoice_item} %>
     </div>
   <% end %>
-<h3>Total Revenue: $<%= merchant.invoice_items.total_revenue %></h3>
+<h3>Gross Merchant Revenue: $<%= merchant.invoice_items.total_revenue %></h3>
+<h3>Merchant Revenue w/ Discount(s): $<%= invoice.discounted_total_revenue(merchant.id) %></h3>

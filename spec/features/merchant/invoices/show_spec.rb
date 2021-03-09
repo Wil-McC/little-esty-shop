@@ -64,8 +64,9 @@ RSpec.describe 'the merchant invoice index page' do
     @disco2 = @merchant1.discounts.create!(percentage: 25, threshold: 10)
 
     visit merchant_invoice_path(@merchant1.id, @invoice1.id)
-    # update expected amount
-    expect(page).to have_content("Total Revenue: $2100")
+
+    expect(page).to have_content("Gross Merchant Revenue: $2100")
+    expect(page).to have_content('Merchant Revenue w/ Discount(s): $1880')
   end
 
   it 'shows update item status select field and update button' do

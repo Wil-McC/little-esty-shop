@@ -20,28 +20,40 @@ class Invoice < ApplicationRecord
     invoice_items.sum("invoice_items.quantity * invoice_items.unit_price").to_i
   end
 
-  def discounted_total_revenue # (merchant_id)
-    # @merchant = Merchant.find(params[:merchant_id])
-    invoice_total_revenue - discount_total(invoice_items)
+  def invoice_discount_revenue
+    gross = invoice_items.sum("invoice_items.quantity * invoice_items.unit_price").to_i
+    gross - discount_total(invoice_items)
+  end
+
+  def merchant_total_revenue(merchant_id)
+    merchant = Merchant.find(merchant_id)
+    merchant.invoice_items.sum("invoice_items.quantity * invoice_items.unit_price").to_i
+  end
+
+  def discounted_total_revenue(merchant_id)
+    merchant = Merchant.find(merchant_id)
+    merchant_total_revenue(merchant_id) - discount_total(merchant.invoice_items)
+  end
+
+  def discounted_ids(invoice_items)
+    invoice_items.ids & discount_compute.ids
   end
 
   def discount_total(invoice_items)
-    discount = 0
-    # if in discount_compute
-    # add gross_discount to discount collector
-    #
-    # discount_compute.first ( largest applicable discount )
-    # else if any? false, discount stays at 0
-
-    discount += find(ii.id).gross_discount
-    return (discount / 100)
+    if discounted_ids(invoice_items).empty?
+      return 0
+    else
+      discount = discounted_ids(invoice_items).sum do |id|
+        discount_compute.find(id).gross_discount
+      end
+      return (discount / 100).to_i
+    end
   end
 
   def discount_compute
-    out = invoice_items.joins(:discounts)
+    invoice_items.joins(:discounts)
       .select('invoice_items.*, ((invoice_items.quantity * invoice_items.unit_price) * discounts.percentage) as gross_discount')
-      .order('discounts.percentage')
+      .order('discounts.percentage DESC')
       .where('invoice_items.quantity >= discounts.threshold')
-    require "pry"; binding.pry
   end
 end
