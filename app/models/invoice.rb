@@ -21,21 +21,28 @@ class Invoice < ApplicationRecord
   end
 
   def discounted_total_revenue
-    # discount = fetch discount
+    # discount - fetch_discount
     # invoice_total_revenue - discount
-    # iis.each do ???
+    # move each to fetch_discount ???
+    invoice_items.each do |ii|
+      fetch_discount(ii.id)
+    end
   end
 
-  def fetch_discount
+  def fetch_discount(ii_id)
+    discount = 0
     # if in discount_compute
+    # add gross_discount to discount collector
+    #
     # discount_compute.first ( largest applicable discount )
+    # else if any? false, discount stays at 0
+    discount / 100
   end
 
   def discount_compute
-    out = invoice_items.joins(:discounts)
-    .select('invoice_items.*, ((invoice_items.quantity * invoice_items.unit_price) * discounts.percentage) as gross_discount')
-    .order('discounts.percentage')
-    .where('invoice_items.quantity >= discounts.threshold')
-    require "pry"; binding.pry
+    invoice_items.joins(:discounts)
+      .select('invoice_items.*, ((invoice_items.quantity * invoice_items.unit_price) * discounts.percentage) as gross_discount')
+      .order('discounts.percentage')
+      .where('invoice_items.quantity >= discounts.threshold')
   end
 end

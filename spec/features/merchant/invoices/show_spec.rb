@@ -59,9 +59,12 @@ RSpec.describe 'the merchant invoice index page' do
     expect(page).not_to have_content(@item7.name)
   end
 
-  it "shows total revenue for all items on the invoice" do
-    visit merchant_invoice_path(@merchant1.id, @invoice1.id)
+  it "shows total revenue for all items on the invoice with discounts applied" do
+    @disco1 = @merchant1.discounts.create!(percentage: 20, threshold: 5)
+    @disco2 = @merchant1.discounts.create!(percentage: 25, threshold: 10)
 
+    visit merchant_invoice_path(@merchant1.id, @invoice1.id)
+    # update expected amount
     expect(page).to have_content("Total Revenue: $2100")
   end
 
