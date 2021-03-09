@@ -23,18 +23,19 @@ class Invoice < ApplicationRecord
   def discounted_total_revenue
     # discount = fetch discount
     # invoice_total_revenue - discount
+    # iis.each do ???
   end
 
   def fetch_discount
     # if in discount_compute
-    #
+    # discount_compute.first ( largest applicable discount )
   end
 
   def discount_compute
     out = invoice_items.joins(:discounts)
-    .select('invoice_items.*, (discounts.percentage_discount * invoice_items.quantity * invoice_items.unit_price) as gross_discount')
-    .where('invoice_items.quantity >= discounts.threshold')
+    .select('invoice_items.*, ((invoice_items.quantity * invoice_items.unit_price) * discounts.percentage) as gross_discount')
     .order('discounts.percentage')
+    .where('invoice_items.quantity >= discounts.threshold')
     require "pry"; binding.pry
   end
 end

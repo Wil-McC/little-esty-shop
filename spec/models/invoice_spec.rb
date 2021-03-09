@@ -72,7 +72,7 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice1.invoice_total_revenue).to eq(2200)
     end
     it "discount_compute" do
-      expect(@invoice1.discount_compute).to eq(1980)
+      expect(@invoice1.discount_compute.length).to eq(2)
     end
   end
 end
