@@ -75,8 +75,21 @@ RSpec.describe 'the merchant invoice index page' do
 
     visit merchant_invoice_path(@merchant1.id, @invoice1.id)
 
+    expect(@invoice_item1.discount).to eq(@disco1)
+
     within("#invoice_item-#{@invoice_item1.id}") do
       expect(page).to have_link("#{@disco1.percentage}% Discount Applied")
+    end
+  end
+
+  it "show no discsount applied when none apply" do
+    @disco1 = @merchant1.discounts.create!(percentage: 20, threshold: 5)
+
+    visit merchant_invoice_path(@merchant1.id, @invoice1.id)
+
+    expect(@invoice_item1.discount).to eq(@disco1)
+    within("#invoice_item-#{@invoice_item6.id}") do
+      expect(page).to have_content("No Discount Applied")
     end
   end
 

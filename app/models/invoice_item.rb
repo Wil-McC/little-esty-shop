@@ -17,12 +17,19 @@ class InvoiceItem < ApplicationRecord
   end
 
   def discount
-    merchant = merchants.first
-    if invoice.discount_applied.find(id)
+    if invoice.discount_applied.ids.include?(id)
       disco_id = invoice.discount_applied.find(id).discount_id
       disco = Discount.find(disco_id)
     else
       nil
+    end
+  end
+
+  def applied
+    if discount != nil
+      "disco_link"
+    else
+      "no_disco"
     end
   end
 end
