@@ -5,7 +5,7 @@ class DateService
   end
 
   def self.upcoming_three
-    # upcoming.first(3)
+    upcoming.first(3)
   end
 
   def self.get_data(url)
@@ -14,7 +14,3 @@ class DateService
     JSON.parse(data, symbolize_names: true)
   end
 end
-
-# <% DateService.upcoming_three.each do |holiday| %>
-  # <p><%= holiday[:localName] %> - <%= holiday[:date] %></p>
-# <% end %>

@@ -27,7 +27,7 @@ RSpec.describe 'when I visit the merchant discount index page' do
 
     expect(current_path).to eq(new_merchant_discount_path(@merchant1))
   end
-  xit 'displays the next 3 upcoming holidays in a holidays section' do
+  it 'displays the next 3 upcoming holidays in a holidays section' do
     visit merchant_discounts_path(@merchant1)
 
     within(".upcoming_holidays") do
