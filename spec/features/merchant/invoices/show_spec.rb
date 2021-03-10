@@ -59,11 +59,41 @@ RSpec.describe 'the merchant invoice index page' do
     expect(page).not_to have_content(@item7.name)
   end
 
-  it "shows total revenue for all items on the invoice" do
+  # Bulk Discount Tests
+
+  it "shows total revenue for all items on the invoice with discounts applied" do
+    @disco1 = @merchant1.discounts.create!(percentage: 20, threshold: 5)
+
     visit merchant_invoice_path(@merchant1.id, @invoice1.id)
 
-    expect(page).to have_content("Total Revenue: $2100")
+    expect(page).to have_content("Gross Merchant Revenue: $2100")
+    expect(page).to have_content('Merchant Revenue w/ Discount(s): $1880')
   end
+
+  it "show link to discount show page for eligible invoice items" do
+    @disco1 = @merchant1.discounts.create!(percentage: 20, threshold: 5)
+
+    visit merchant_invoice_path(@merchant1.id, @invoice1.id)
+
+    expect(@invoice_item1.discount).to eq(@disco1)
+
+    within("#invoice_item-#{@invoice_item1.id}") do
+      expect(page).to have_link("#{@disco1.percentage}% Discount Applied")
+    end
+  end
+
+  it "show no discsount applied when none apply" do
+    @disco1 = @merchant1.discounts.create!(percentage: 20, threshold: 5)
+
+    visit merchant_invoice_path(@merchant1.id, @invoice1.id)
+
+    expect(@invoice_item1.discount).to eq(@disco1)
+    within("#invoice_item-#{@invoice_item6.id}") do
+      expect(page).to have_content("No Discount Applied")
+    end
+  end
+
+  # Drop Down Tests
 
   it 'shows update item status select field and update button' do
     visit merchant_invoice_path(@merchant1.id, @invoice1.id )

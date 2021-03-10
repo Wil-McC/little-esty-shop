@@ -17,6 +17,8 @@ RSpec.describe Merchant, type: :model do
   describe "Instance Methods" do
     before :each do
       @merchant1 = create(:merchant)
+      @disco1 = @merchant1.discounts.create!(percentage: 20, threshold: 5)
+      @disco2 = @merchant1.discounts.create!(percentage: 25, threshold: 10)
 
       @item = create(:item, merchant_id: @merchant1.id, status: true)
       @item2 = create(:item, merchant_id: @merchant1.id, status: true)
@@ -30,12 +32,12 @@ RSpec.describe Merchant, type: :model do
       @invoice3 = create(:invoice, created_at: "2011-03-01 09:54:09 UTC")
       @invoice4 = create(:invoice, created_at: "2020-03-25 09:54:09 UTC")
 
-      @invoice_item = create(:invoice_item, invoice_id: @invoice.id, item_id: @item.id, status: 0)
-      @invoice_item2 = create(:invoice_item, invoice_id: @invoice2.id, item_id: @item2.id, status: 1)
-      @invoice_item3 = create(:invoice_item, invoice_id: @invoice3.id, item_id: @item3.id, status: 1)
-      @invoice_item4 = create(:invoice_item, invoice_id: @invoice4.id, item_id: @item4.id, status: 0)
-      @invoice_item5 = create(:invoice_item_with_invoices, item_id: @item5.id, status: 2)
-      @invoice_item6 = create(:invoice_item_with_invoices, item_id: @item6.id, status: 2)
+      @invoice_item = create(:invoice_item, invoice_id: @invoice.id, item_id: @item.id, status: 0, quantity: 6, unit_price: 100)
+      @invoice_item2 = create(:invoice_item, invoice_id: @invoice2.id, item_id: @item2.id, status: 1, quantity: 5, unit_price: 100)
+      @invoice_item3 = create(:invoice_item, invoice_id: @invoice3.id, item_id: @item3.id, status: 1, quantity: 4, unit_price: 100)
+      @invoice_item4 = create(:invoice_item, invoice_id: @invoice4.id, item_id: @item4.id, status: 0, quantity: 3, unit_price: 100)
+      @invoice_item5 = create(:invoice_item_with_invoices, item_id: @item5.id, status: 2, quantity: 2, unit_price: 100)
+      @invoice_item6 = create(:invoice_item_with_invoices, item_id: @item6.id, status: 2, quantity: 1, unit_price: 100)
 
       @transactions = create_list(:transaction, 6, invoice_id: @invoice_item.invoice.id, result: "success")
       @transactions2 = create_list(:transaction, 7, invoice_id: @invoice_item2.invoice.id, result: "success")

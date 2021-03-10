@@ -14,7 +14,3 @@ class DateService
     JSON.parse(data, symbolize_names: true)
   end
 end
-
-# <% DateService.upcoming_three.each do |holiday| %>
-  # <p><%= holiday[:localName] %> - <%= holiday[:date] %></p>
-# <% end %>

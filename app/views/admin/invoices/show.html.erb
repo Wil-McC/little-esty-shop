@@ -2,7 +2,9 @@
 
 <h3><%= render partial: 'dropdown', locals: { invoice: @invoice } %></h3>
 <h3><%= @invoice.created_at.strftime("%A, %B %d, %Y") %></h3>
-<h3>Total Invoice Revenue: $<%= @invoice.total_revenue %></h3>
+<h3>Total Invoice Revenue: $<%= @invoice.invoice_total_revenue %></h3>
+<h3>Invoice Revenue w/ Discounts: $<%= @invoice.invoice_discount_revenue %></h3>
+
 
 <h3>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></h3>
 

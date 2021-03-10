@@ -1,9 +1,12 @@
 <h2>All items on Invoice:</h2>
-  <% @merchant.invoice_items.each do |invoice_item| %>
+
+  <% merchant.invoice_items.each do |invoice_item| %>
     <div id="invoice_item-<%= invoice_item.id %>">
       <%= invoice_item.item.name %>
       <%= invoice_item.quantity %>
+      <%= render partial: invoice_item.applied, locals: {discount: invoice_item.discount, merchant: merchant} %>
       <%= render partial: "dropdown", locals: {invoice_item: invoice_item} %>
     </div>
   <% end %>
-<h3>Total Revenue: $<%=  @merchant.invoice_items.total_revenue %></h3>
+<h3>Gross Merchant Revenue: $<%= merchant.invoice_items.total_revenue %></h3>
+<h3>Merchant Revenue w/ Discount(s): $<%= invoice.discounted_total_revenue(merchant.id) %></h3>

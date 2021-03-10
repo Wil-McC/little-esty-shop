@@ -73,4 +73,5 @@ class Merchant < ApplicationRecord
   def disable_merchant
     update(status: false)
   end
+  # GOOD invoice_items.where('invoice_items.quantity >= ?', 5)
 end
