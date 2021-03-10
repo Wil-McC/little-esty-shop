@@ -134,6 +134,10 @@ RSpec.describe Merchant, type: :model do
       expect(Merchant.top_merchants[4].name).to eq(@merchant5.name)
       expect(Merchant.top_merchants).not_to include(@merchant6)
     end
+    it "enabled and disabled queries" do
+      expect(Merchant.enabled.length).to eq(0)
+      expect(Merchant.disabled.length).to eq(6)
+    end
   end
 
   describe '#top_selling_date' do
@@ -164,6 +168,15 @@ RSpec.describe Merchant, type: :model do
     it 'returns a merchant top day by revenue' do
       expect(@merchant1.top_selling_date).to eq("Monday, March 25, 2013")
       expect(@merchant2.top_selling_date).to eq("Tuesday, March 01, 2011")
+    end
+    it "returns 5 most popular items" do
+      expect(@merchant1.most_popular_items).to eq([@item1, @item2])
+    end
+    it "enable and disable update merchant status" do
+      @merchant1.disable_merchant
+      expect(@merchant1.status).to eq(false)
+      @merchant1.enable_merchant
+      expect(@merchant1.status).to eq(true)
     end
   end
 end

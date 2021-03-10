@@ -81,5 +81,9 @@ RSpec.describe InvoiceItem, type: :model do
 
       expect(@invoice_item1.discount).to eq(@disco2)
     end
+    it "returns correct partial string depending on whether eligible" do
+      expect(@invoice_item1.applied).to eq("disco_link")
+      expect(@invoice_item4.applied).to eq("no_disco")
+    end
   end
 end
